@@ -10,7 +10,6 @@
 /API/.env.dev
 /API/.env.local
 /API/.env.*.local
-/API
 /API/public/bundles/
 
 # --- GLOBAL ---
