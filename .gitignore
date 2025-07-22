@@ -1,0 +1,26 @@
+# --- FRONTEND (React + Vite + TypeScript) ---
+/FRONTEND/node_modules/
+/FRONTEND/dist/
+/FRONTEND/.vite/
+/FRONTEND/tsconfig.tsbuildinfo
+
+# --- BACKEND (Symfony >=7) ---
+/API/var/
+/API/vendor/
+/API/.env.dev
+/API/.env.local
+/API/.env.*.local
+/API
+/API/public/bundles/
+
+# --- GLOBAL ---
+.env
+.DS_Store
+*.log
+
+# Composer
+/composer.lock
+/composer.phar
+
+# --- INTELLIJ --- #
+.idea/
