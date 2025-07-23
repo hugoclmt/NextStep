@@ -1,0 +1,58 @@
+name: Symfony CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  symfony-ci:
+    name: Symfony Quality Checks
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, intl, pdo_mysql
+          coverage: xdebug
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction
+        working-directory: backend
+
+      - name: Run PHP CS Fixer
+        run: ./vendor/bin/php-cs-fixer fix --dry-run --diff
+        working-directory: backend
+
+      - name: Run PHPStan
+        run: ./vendor/bin/phpstan analyse src --level=max
+        working-directory: backend
+
+      - name: Run Security Checker (Symfony CLI)
+        run: symfony security:check --disable-exit-code
+        working-directory: backend
+
+      - name: Run PHPUnit
+        env:
+          DATABASE_URL: mysql://root:root@127.0.0.1:3306/test
+        run: ./bin/phpunit
+        working-directory: backend
