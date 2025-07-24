@@ -1,2 +1,2 @@
-# NextStep
-A web and mobile application that helps recent graduates organize their job search, optimize their applications, and track their progress. The goal is to create an intuitive tool that centralizes everything a job seeker needs
+# FamilyHub
+FamilyHub is a web and mobile application that centralizes family organization and communication in one place. It's an interactive dashboard that helps family members manage their daily lives more efficiently.
